@@ -53,5 +53,6 @@ pipeline {
                 // Dağıtımın durumunu terminale basıp kontrol edelim
                 sh 'kubectl rollout status deployment/devops4-app --kubeconfig=/home/ceylin/.kube/config'
             }
-    }
-}               
+        }
+    }    
+}          
