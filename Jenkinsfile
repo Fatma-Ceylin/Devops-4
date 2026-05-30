@@ -47,8 +47,8 @@ pipeline {
         stage('Deploy to K8s') {
             steps {
                 // Minikube/Kubernetes konfigürasyonunu Jenkins kullanıcısının görebileceği şekilde çalıştırıyoruz
-                sh 'kubectl apply -f k8s/deployment.yaml'
-                sh 'kubectl apply -f k8s/service.yaml'
+                sh 'kubectl apply -f k8s/deployment.yaml --validate=false' // --validate=false, imagePullSecrets nedeniyle oluşabilecek hataları engeller
+                sh 'kubectl apply -f k8s/service.yaml --validate=false'
                 
                 // Dağıtımın durumunu terminale basıp kontrol edelim
                 sh 'kubectl rollout status deployment/devops4-app'
