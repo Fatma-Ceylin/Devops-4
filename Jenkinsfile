@@ -50,6 +50,9 @@ pipeline {
                 sh 'kubectl apply -f k8s/deployment.yaml --kubeconfig=/home/ceylin/.kube/config' // --validate=false, imagePullSecrets nedeniyle oluşabilecek hataları engeller
                 sh 'kubectl apply -f k8s/service.yaml --kubeconfig=/home/ceylin/.kube/config'
                 
+                // ◄ YENİ SATIR: Kubernetes'e mevcut podları kapatıp Docker Hub'dan yenisini çekmeye zorlar
+                sh 'kubectl rollout restart deployment/devops4-app --kubeconfig=/home/ceylin/.kube/config'
+                
                 // Dağıtımın durumunu terminale basıp kontrol edelim
                 sh 'kubectl rollout status deployment/devops4-app --kubeconfig=/home/ceylin/.kube/config'
 

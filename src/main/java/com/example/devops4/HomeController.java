@@ -8,7 +8,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String index() {
-		return "Welcome to DevOps4! Olduuuuuu";
+		return "Welcome to DevOps4! Oldu";
 	}
 
 }
