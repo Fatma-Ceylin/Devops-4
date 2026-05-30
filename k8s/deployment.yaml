@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops4-app
+  labels:
+    app: devops4
+spec:
+  replicas: 1 # İlk başta 1 pod ile başlatıyoruz (Son aşamada 2'ye scale edeceğiz)
+  selector:
+    matchLabels:
+      app: devops4
+  template:
+    metadata:
+      labels:
+        app: devops4
+    spec:
+      containers:
+      - name: devops4-container
+        image: fceylin/forth:latest # Docker Hub'daki kendi imaj adınızla güncelleyin
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
