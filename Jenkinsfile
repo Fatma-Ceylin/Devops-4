@@ -47,11 +47,11 @@ pipeline {
         stage('Deploy to K8s') {
             steps {
                 // Minikube/Kubernetes konfigürasyonunu Jenkins kullanıcısının görebileceği şekilde çalıştırıyoruz
-                sh 'kubectl apply -f k8s/deployment.yaml --validate=false' // --validate=false, imagePullSecrets nedeniyle oluşabilecek hataları engeller
-                sh 'kubectl apply -f k8s/service.yaml --validate=false'
+                sh 'env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy kubectl apply -f k8s/deployment.yaml ' // --validate=false, imagePullSecrets nedeniyle oluşabilecek hataları engeller
+                sh 'env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy kubectl apply -f k8s/service.yaml'
                 
                 // Dağıtımın durumunu terminale basıp kontrol edelim
-                sh 'kubectl rollout status deployment/devops4-app'
+                sh 'env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxykubectl rollout status deployment/devops4-app'
             }
         }
     }
