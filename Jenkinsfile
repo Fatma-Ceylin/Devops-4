@@ -48,10 +48,10 @@ pipeline {
             steps {
                 // Minikube/Kubernetes konfigürasyonunu Jenkins kullanıcısının görebileceği şekilde çalıştırıyoruz
                 sh 'kubectl apply -f k8s/deployment.yaml --kubeconfig=/home/ceylin/.kube/config' // --validate=false, imagePullSecrets nedeniyle oluşabilecek hataları engeller
-                sh 'env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy kubectl apply -f k8s/service.yaml --kubeconfig=/home/ceylin/.kube/config'
+                sh 'kubectl apply -f k8s/service.yaml --kubeconfig=/home/ceylin/.kube/config'
                 
                 // Dağıtımın durumunu terminale basıp kontrol edelim
                 sh 'kubectl rollout status deployment/devops4-app --kubeconfig=/home/ceylin/.kube/config'
             }
     }
-}
+}               
