@@ -52,16 +52,26 @@ pipeline {
                 
                 // ◄ YENİ SATIR: Kubernetes'e mevcut podları kapatıp Docker Hub'dan yenisini çekmeye zorlar
                 sh 'kubectl rollout restart deployment/devops4-app --kubeconfig=/home/ceylin/.kube/config'
-                
+
                 // Dağıtımın durumunu terminale basıp kontrol edelim
                 sh 'kubectl rollout status deployment/devops4-app --kubeconfig=/home/ceylin/.kube/config'
 
                 // 3. ÖNEMLİ: Mevcut çalışan eski bir port-forward varsa çakışmasın diye önce onu sonlandırıyoruz
                 sh 'pkill -f "port-forward" || true'
+
+                // 5. TAM OTOMASYON: Jenkins'in süreci öldürmesini engelleyerek tüneli arka planda başlat
+                script {
+                    withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
+                        sh 'nohup kubectl port-forward service/devops4-service 8081:8081 --address 0.0.0.0 --kubeconfig=/home/ceylin/.kube/config > /dev/null 2>&1 &'
+                    }
+                }
                 
                 // 4. Port yönlendirmeyi ARKA PLANDA (nohup ve & ile) başlatıyoruz
                 // Böylece Jenkins komutu tetikler ve arkasına bakmadan pipeline'ı BAŞARIYLA bitirir.
                 sh 'nohup kubectl port-forward service/devops4-service 8081:8081 --address 0.0.0.0 --kubeconfig=/home/ceylin/.kube/config > /dev/null 2>&1 &'
+
+                sh 'sleep 2'
+                sh 'echo "CI/CD Pipeline ve Otomatik Port Yönlendirme Başarıyla Tamamlandı!"'
             }
         }
     }    
