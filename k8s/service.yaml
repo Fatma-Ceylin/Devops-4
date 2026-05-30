@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: devops4-service
 spec:
-  type: NodePort # Minikube üzerinde tarayıcıdan erişebilmek için NodePort kullanıyoruz
+  type: LoadBalancer # Minikube üzerinde tarayıcıdan erişebilmek için LoadBalancer kullanıyoruz
   selector:
     app: devops4
   ports:
     - port: 8081
       targetPort: 8081
-      nodePort: 30081 # Dışarıdan http://minikube-ip:30081 şeklinde erişebileceğiz
