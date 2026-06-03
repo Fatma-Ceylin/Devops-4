@@ -8,7 +8,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String index() {
-		return "Welcome to DevOps4! Oldukça güzel bir uygulama oldu, değil mi?";
+		return "Welcome to DevOps4! Webhook test";
 	}
 
 }
